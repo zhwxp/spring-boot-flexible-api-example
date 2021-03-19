@@ -26,7 +26,6 @@ public class WebConfig implements WebMvcConfigurer {
     public FilterRegistrationBean<SquigglyRequestFilter> squigglyRequestFilter() {
         FilterRegistrationBean<SquigglyRequestFilter> filter = new FilterRegistrationBean<>();
         filter.setFilter(new SquigglyRequestFilter());
-        filter.setOrder(1);
         return filter;
     }
 
