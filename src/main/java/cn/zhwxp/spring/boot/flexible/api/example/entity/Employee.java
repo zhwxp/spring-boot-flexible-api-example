@@ -1,33 +1,25 @@
 package cn.zhwxp.spring.boot.flexible.api.example.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import lombok.Builder;
 import lombok.Data;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-@Entity
+@Document
 @Data
+@Builder
 public class Employee {
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    @MongoId
+    private String id;
 
-    @Column
     private String name;
 
-    @Column
     private String gender;
 
-    @Column
     private int age;
 
-    @ManyToOne
     private Department department;
 
 }

@@ -1,26 +1,16 @@
 package cn.zhwxp.spring.boot.flexible.api.example.config;
 
-import java.util.List;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.bohnman.squiggly.Squiggly;
 import com.github.bohnman.squiggly.web.RequestSquigglyContextProvider;
 import com.github.bohnman.squiggly.web.SquigglyRequestFilter;
-import net.kaczmarzyk.spring.data.jpa.web.SpecificationArgumentResolver;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
-
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new SpecificationArgumentResolver());
-    }
+public class WebConfig implements RepositoryRestConfigurer {
 
     @Bean
     public FilterRegistrationBean<SquigglyRequestFilter> squigglyRequestFilter() {
@@ -29,12 +19,9 @@ public class WebConfig implements WebMvcConfigurer {
         return filter;
     }
 
-    @Bean
-    public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter() {
-        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper objectMapper = Squiggly.init(messageConverter.getObjectMapper(), new RequestSquigglyContextProvider());
-        messageConverter.setObjectMapper(objectMapper);
-        return messageConverter;
+    @Override
+    public void configureJacksonObjectMapper(ObjectMapper objectMapper) {
+        Squiggly.init(objectMapper, new RequestSquigglyContextProvider());
     }
 
 }
