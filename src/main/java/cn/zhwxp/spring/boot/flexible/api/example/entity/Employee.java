@@ -1,7 +1,7 @@
 package cn.zhwxp.spring.boot.flexible.api.example.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Data;
 @Builder
 public class Employee {
 
-    @MongoId
+    @Id
     private String id;
 
     private String name;
